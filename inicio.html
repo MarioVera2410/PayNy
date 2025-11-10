@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pagos - Iniciar Sesión</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a66c2">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/NOVEVA.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind = { config: { darkMode: 'class' } };</script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-md bg-gray-900 rounded-2xl p-6 sm:p-8">
+        <div class="text-center mb-8">
+            <br></br>
+            <br></br>
+            <h1 class="text-4xl font-extrabold text-white mb-2">PayNy</h1>
+            <h2 class="text-2xl font-semibold text-white mt-6">Iniciar Sesión</h2>
+        </div>
+        
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Correo Electrónico</label>
+                <input type="email" id="email" name="email"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 
+                           focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm 
+                           transition duration-150 ease-in-out dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                    placeholder="tu.correo@empresa.com" required>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Contraseña</label>
+                <input type="password" id="password" name="password"
+                    class="block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 
+                           focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm 
+                           transition duration-150 ease-in-out dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                    placeholder="••••••••" required>
+            </div>
+            <p id="errorMessage" class="text-red-600 text-sm text-center -mt-2"></p>
+            <button type="submit"
+              class="w-full py-3 sm:py-3.5 rounded-xl text-base sm:text-lg font-semibold
+                     bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 text-white
+                     focus:ring-blue-500 transition-colors duration-200">
+                Entrar
+            </button>
+            <a  href="https://google.com" 
+                class= "block w-full text-center py-3 sm:py-3.5 rounded-xl text-base sm:text-lg font-semibold
+                        bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 text-white
+                        focus:ring-blue-500 transition-colors duration-200">
+                Volver
+            </a>
+        </form>
+    </div>
+    
+    <script>
+        // Redirigir si ya hay sesión
+        fetch('/api/auth/check_session.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.loggedIn) {
+                    window.location.href = 'dashboard';
+                }
+            })
+            .catch(error => {
+                console.error("Error al verificar sesión en login:", error);
+            });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = ''; // Limpiar errores anteriores
+
+            fetch('/api/auth/login.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.error || 'Error desconocido') });
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.location.href = 'dashboard';
+            })
+            .catch(error => {
+                errorMessage.textContent = error.message;
+            });
+        });
+    </script>
+    
+    <script>
+      // Registrar SW lo antes posible
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+    
+</body>
+</html>

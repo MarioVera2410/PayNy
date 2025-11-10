@@ -1,0 +1,18 @@
+[09-Oct-2025 11:28:20 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home4/mariove4/pagos.cnoveva.com/config/database.php:11
+Stack trace:
+#0 /home4/mariove4/pagos.cnoveva.com/config/database.php(11): mysqli->__construct('localhost', 'mariove4_admin', Object(SensitiveParameterValue), 'mariove4_fondeo')
+#1 /home4/mariove4/pagos.cnoveva.com/api/providers/create.php(29): getDbConnection()
+#2 {main}
+  thrown in /home4/mariove4/pagos.cnoveva.com/config/database.php on line 11
+[09-Oct-2025 11:28:22 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home4/mariove4/pagos.cnoveva.com/config/database.php:11
+Stack trace:
+#0 /home4/mariove4/pagos.cnoveva.com/config/database.php(11): mysqli->__construct('localhost', 'mariove4_admin', Object(SensitiveParameterValue), 'mariove4_fondeo')
+#1 /home4/mariove4/pagos.cnoveva.com/api/providers/create.php(29): getDbConnection()
+#2 {main}
+  thrown in /home4/mariove4/pagos.cnoveva.com/config/database.php on line 11
+[09-Oct-2025 13:32:30 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home4/mariove4/pagos.cnoveva.com/config/database.php:11
+Stack trace:
+#0 /home4/mariove4/pagos.cnoveva.com/config/database.php(11): mysqli->__construct('localhost', 'mariove4_admin', Object(SensitiveParameterValue), 'mariove4_fondeo')
+#1 /home4/mariove4/pagos.cnoveva.com/api/providers/create.php(29): getDbConnection()
+#2 {main}
+  thrown in /home4/mariove4/pagos.cnoveva.com/config/database.php on line 11
